@@ -50,6 +50,8 @@ export default function AddTradePage() {
     positionSize: '',
     riskAmount: '',
     fees: '',
+    leverage: '',
+    tickValue: '',
     strategy: '',
     timeframe: '15m' as Timeframe,
     session: 'new_york' as Session,
@@ -69,7 +71,9 @@ export default function AddTradePage() {
     const exit = parseFloat(form.exitPrice);
     const size = parseFloat(form.positionSize);
     if (!entry || !exit || !size) return null;
-    const raw = form.direction === 'long' ? (exit - entry) * size : (entry - exit) * size;
+    const tick = parseFloat(form.tickValue) || 1;
+    const move = form.direction === 'long' ? (exit - entry) : (entry - exit);
+    const raw = move * size * tick;
     return raw - (parseFloat(form.fees) || 0);
   })();
 
@@ -106,7 +110,9 @@ export default function AddTradePage() {
     const exit = parseFloat(form.exitPrice);
     const size = parseFloat(form.positionSize);
     const fees = parseFloat(form.fees) || 0;
-    const calculatedPnl = (form.direction === 'long' ? (exit - entry) * size : (entry - exit) * size) - fees;
+    const tick = parseFloat(form.tickValue) || 1;
+    const move = form.direction === 'long' ? (exit - entry) : (entry - exit);
+    const calculatedPnl = move * size * tick - fees;
     const outcome = Math.abs(calculatedPnl) < 1 ? 'breakeven' : calculatedPnl > 0 ? 'win' : 'loss';
     const risk = parseFloat(form.riskAmount) || 0;
     const trade: Trade = {
@@ -123,6 +129,8 @@ export default function AddTradePage() {
       takeProfit: form.takeProfit ? parseFloat(form.takeProfit) : undefined,
       positionSize: size,
       riskAmount: risk || undefined,
+      leverage: form.leverage ? parseFloat(form.leverage) : undefined,
+      tickValue: form.tickValue ? parseFloat(form.tickValue) : undefined,
       pnl: parseFloat(calculatedPnl.toFixed(2)),
       rMultiple: risk > 0 ? parseFloat((calculatedPnl / risk).toFixed(2)) : undefined,
       fees,
@@ -255,7 +263,30 @@ export default function AddTradePage() {
               <Field label="Fees / Commission">
                 <Input type="number" step="0.01" placeholder="0.00" value={form.fees} onChange={e => set('fees', e.target.value)} />
               </Field>
+              <Field label="Tick Value ($)">
+                <Input type="number" step="0.01" placeholder="e.g. 12.50 for NQ" value={form.tickValue} onChange={e => set('tickValue', e.target.value)} />
+              </Field>
+              <Field label="Leverage">
+                <Input type="number" step="0.1" placeholder="e.g. 20" value={form.leverage} onChange={e => set('leverage', e.target.value)} />
+              </Field>
             </div>
+            {(form.tickValue || form.leverage) && (
+              <div className="flex flex-wrap gap-4 pt-1 text-xs text-muted-foreground border-t border-border">
+                {form.tickValue && (
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400 inline-block" />
+                    Tick value: <span className="text-foreground font-medium">${parseFloat(form.tickValue).toLocaleString('en-US', { minimumFractionDigits: 2 })} USD</span>
+                    {form.positionSize && <span className="text-muted-foreground">× {form.positionSize} contracts</span>}
+                  </span>
+                )}
+                {form.leverage && (
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />
+                    Leverage: <span className="text-foreground font-medium">{parseFloat(form.leverage)}:1</span>
+                  </span>
+                )}
+              </div>
+            )}
           </Card>
 
           {/* Setup */}

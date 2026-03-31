@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS public.trades (
   pnl           numeric NOT NULL DEFAULT 0,
   fees          numeric DEFAULT 0,
   risk_amount   numeric,
+  leverage      numeric,
+  tick_value    numeric,
   r_multiple    numeric,
   outcome       text NOT NULL,
   strategy      text,
@@ -118,6 +120,10 @@ BEGIN
   RETURN NEW;
 END;
 $$;
+
+-- If upgrading an existing DB, run these:
+-- ALTER TABLE public.trades ADD COLUMN IF NOT EXISTS leverage   numeric;
+-- ALTER TABLE public.trades ADD COLUMN IF NOT EXISTS tick_value numeric;
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created

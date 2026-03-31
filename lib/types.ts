@@ -19,6 +19,8 @@ export interface Trade {
   takeProfit?: number;
   positionSize: number;
   riskAmount?: number;
+  leverage?: number;
+  tickValue?: number;
   pnl: number;
   rMultiple?: number;
   fees?: number;

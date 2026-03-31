@@ -26,6 +26,8 @@ function rowToTrade(r: Record<string, unknown>): Trade {
     pnl: Number(r.pnl),
     fees: r.fees != null ? Number(r.fees) : undefined,
     riskAmount: r.risk_amount != null ? Number(r.risk_amount) : undefined,
+    leverage: r.leverage != null ? Number(r.leverage) : undefined,
+    tickValue: r.tick_value != null ? Number(r.tick_value) : undefined,
     rMultiple: r.r_multiple != null ? Number(r.r_multiple) : undefined,
     outcome: r.outcome as Trade['outcome'],
     strategy: r.strategy as string | undefined,
@@ -61,6 +63,8 @@ function tradeToRow(t: Trade) {
     pnl: t.pnl,
     fees: t.fees ?? 0,
     risk_amount: t.riskAmount ?? null,
+    leverage: t.leverage ?? null,
+    tick_value: t.tickValue ?? null,
     r_multiple: t.rMultiple ?? null,
     outcome: t.outcome,
     strategy: t.strategy ?? null,
@@ -175,6 +179,8 @@ export async function dbUpdateTrade(id: string, updates: Partial<Trade>): Promis
   if (updates.pnl !== undefined) partial.pnl = updates.pnl;
   if (updates.fees !== undefined) partial.fees = updates.fees;
   if (updates.riskAmount !== undefined) partial.risk_amount = updates.riskAmount;
+  if (updates.leverage !== undefined) partial.leverage = updates.leverage;
+  if (updates.tickValue !== undefined) partial.tick_value = updates.tickValue;
   if (updates.rMultiple !== undefined) partial.r_multiple = updates.rMultiple;
   if (updates.outcome !== undefined) partial.outcome = updates.outcome;
   if (updates.strategy !== undefined) partial.strategy = updates.strategy;
