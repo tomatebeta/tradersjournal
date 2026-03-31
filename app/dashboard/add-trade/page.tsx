@@ -101,8 +101,11 @@ export default function AddTradePage() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = () => {
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
     if (!validate()) return;
+    if (!user?.id) { toast.error('Not signed in'); return; }
     const entry = parseFloat(form.entryPrice);
     const exit = parseFloat(form.exitPrice);
     const size = parseFloat(form.positionSize);
@@ -112,7 +115,7 @@ export default function AddTradePage() {
     const risk = parseFloat(form.riskAmount) || 0;
     const trade: Trade = {
       id: generateId(),
-      userId: user?.id ?? '',
+      userId: user.id,
       date: form.date,
       time: form.time,
       symbol: form.symbol.toUpperCase().trim(),
@@ -144,9 +147,16 @@ export default function AddTradePage() {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    addTrade(trade);
-    toast.success('Trade logged successfully', { description: `${trade.symbol} ${trade.direction} · ${calculatedPnl >= 0 ? '+' : ''}${calculatedPnl.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}` });
-    router.push('/dashboard');
+    setSubmitting(true);
+    try {
+      await addTrade(trade);
+      toast.success('Trade logged successfully', { description: `${trade.symbol} ${trade.direction} · ${calculatedPnl >= 0 ? '+' : ''}${calculatedPnl.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}` });
+      router.push('/dashboard');
+    } catch (err) {
+      toast.error('Failed to save trade', { description: err instanceof Error ? err.message : 'Unknown error' });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -385,8 +395,8 @@ export default function AddTradePage() {
               <div className="flex justify-between"><span className="text-muted-foreground">Tags</span><span className="text-right text-xs">{form.tags.length > 0 ? form.tags.slice(0, 3).join(', ') : '—'}</span></div>
             </div>
             <div className="pt-2 space-y-2">
-              <Button onClick={handleSubmit} className="w-full bg-blue-600 hover:bg-blue-500 text-white gap-2">
-                <Save className="w-4 h-4" /> Save Trade
+              <Button onClick={handleSubmit} disabled={submitting} className="w-full bg-blue-600 hover:bg-blue-500 text-white gap-2">
+                <Save className="w-4 h-4" /> {submitting ? 'Saving…' : 'Save Trade'}
               </Button>
               <Button variant="outline" onClick={() => router.back()} className="w-full">Cancel</Button>
             </div>
