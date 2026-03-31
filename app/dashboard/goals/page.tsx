@@ -16,7 +16,6 @@ import { Plus, ShieldAlert, Target, Trash2, AlertTriangle, CheckCircle2, X } fro
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
-function generateId() { return `rule-${Date.now()}`; }
 
 const TYPE_META: Record<string, { label: string; color: string; icon: React.ElementType }> = {
   daily_loss_limit: { label: 'Daily Loss Limit', color: 'text-red-400', icon: AlertTriangle },
@@ -56,7 +55,7 @@ export default function GoalsPage() {
   const handleAdd = () => {
     if (!form.title.trim()) { toast.error('Title required'); return; }
     const rule: TradingRule = {
-      id: generateId(),
+      id: crypto.randomUUID(),
       userId: user?.id ?? '',
       type: form.type,
       title: form.title,

@@ -21,7 +21,6 @@ const TAG_OPTIONS = ['FVG', 'breakout', 'pullback', 'trend', 'reversal', 'scalpi
 const EMOTIONS: EmotionType[] = ['calm', 'confident', 'focused', 'neutral', 'anxious', 'fearful', 'greedy', 'frustrated', 'overconfident', 'revenge'];
 const MISTAKES = ['Sized too big', 'Moved stop too early', 'Chased entry', 'No clear setup', 'Ignored news', 'Exited too early', 'Added to loser', 'Revenge traded', 'Over-traded', 'FOMO entry', 'Early exit', 'Late entry'];
 
-function generateId() { return `trade-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`; }
 
 function Field({ label, error, children, className }: { label: string; error?: string; children: React.ReactNode; className?: string }) {
   return (
@@ -114,7 +113,7 @@ export default function AddTradePage() {
     const outcome = Math.abs(calculatedPnl) < 1 ? 'breakeven' : calculatedPnl > 0 ? 'win' : 'loss';
     const risk = parseFloat(form.riskAmount) || 0;
     const trade: Trade = {
-      id: generateId(),
+      id: crypto.randomUUID(),
       userId: user.id,
       date: form.date,
       time: form.time,

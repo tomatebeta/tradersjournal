@@ -38,7 +38,6 @@ const ENTRY_TYPES = [
   { value: 'reflection', label: 'Reflection', icon: MessageSquare },
 ];
 
-function generateId() { return `psy-${Date.now()}`; }
 
 export default function PsychologyPage() {
   const { psychologyEntries, savePsychologyEntry, user } = useApp();
@@ -62,7 +61,7 @@ export default function PsychologyPage() {
       return;
     }
     const entry: PsychologyEntry = {
-      id: generateId(),
+      id: crypto.randomUUID(),
       userId: user?.id ?? '',
       date: form.date,
       type: form.type,

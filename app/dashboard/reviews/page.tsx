@@ -15,7 +15,6 @@ import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth, subWeeks, sub
 import { Plus, FileText, CheckCircle, AlertCircle, Target, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
 
-function generateId() { return `review-${Date.now()}`; }
 
 export default function ReviewsPage() {
   const { trades, weeklyReviews, saveWeeklyReview, user } = useApp();
@@ -46,7 +45,7 @@ export default function ReviewsPage() {
 
   const handleSave = () => {
     const review: WeeklyReview = {
-      id: generateId(),
+      id: crypto.randomUUID(),
       userId: user?.id ?? '',
       weekStart: form.weekStart,
       weekEnd: form.weekEnd,
