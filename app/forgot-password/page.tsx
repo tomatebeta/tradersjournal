@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { TrendingUp, ArrowLeft, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { createClient } from '@/lib/supabase/client';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -17,9 +18,16 @@ export default function ForgotPasswordPage() {
   const handleSubmit = async () => {
     if (!email) { toast.error('Please enter your email'); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 800));
-    setSent(true);
-    setLoading(false);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/dashboard/settings`,
+      });
+      if (error) { toast.error(error.message); return; }
+      setSent(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

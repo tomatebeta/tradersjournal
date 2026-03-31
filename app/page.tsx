@@ -82,7 +82,7 @@ export default function LandingPage() {
             </Link>
           </div>
           <div className="flex items-center justify-center gap-6 mt-8 text-xs text-slate-500">
-            {['No credit card', 'Demo data included', 'Export anytime'].map(t => (
+            {['No credit card', 'Free forever', 'Export anytime'].map(t => (
               <div key={t} className="flex items-center gap-1.5">
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />{t}
               </div>

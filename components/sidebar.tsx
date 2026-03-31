@@ -14,6 +14,8 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { useApp } from '@/lib/context';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -38,7 +40,14 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const { theme, setTheme } = useTheme();
   const { settings, stats } = useApp();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
   useEffect(() => setMounted(true), []);
+
+  const handleSignOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push('/login');
+  };
 
   return (
     <aside className={cn(
@@ -117,7 +126,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           {!collapsed && <span>Toggle theme</span>}
         </button>
 
-        {/* User */}
+        {/* User + sign out */}
         <div className={cn('flex items-center gap-3 px-3 py-2 rounded-lg', collapsed ? 'justify-center' : '')}>
           <Avatar className="w-8 h-8 shrink-0">
             <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
@@ -125,10 +134,15 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             </AvatarFallback>
           </Avatar>
           {!collapsed && (
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-sidebar-foreground truncate">{settings.displayName}</div>
-              <div className="text-xs text-sidebar-foreground/50 truncate">{settings.email}</div>
-            </div>
+            <>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-medium text-sidebar-foreground truncate">{settings.displayName}</div>
+                <div className="text-xs text-sidebar-foreground/50 truncate">{settings.email}</div>
+              </div>
+              <button onClick={handleSignOut} title="Sign out" className="p-1 rounded-md hover:bg-sidebar-accent text-sidebar-foreground/40 hover:text-red-400 transition-colors">
+                <LogOut className="w-4 h-4" />
+              </button>
+            </>
           )}
         </div>
       </div>

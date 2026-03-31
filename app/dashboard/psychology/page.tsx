@@ -41,7 +41,7 @@ const ENTRY_TYPES = [
 function generateId() { return `psy-${Date.now()}`; }
 
 export default function PsychologyPage() {
-  const { psychologyEntries, savePsychologyEntry } = useApp();
+  const { psychologyEntries, savePsychologyEntry, user } = useApp();
   const [showForm, setShowForm] = useState(false);
   const [filterType, setFilterType] = useState('all');
 
@@ -63,7 +63,7 @@ export default function PsychologyPage() {
     }
     const entry: PsychologyEntry = {
       id: generateId(),
-      userId: 'user-1',
+      userId: user?.id ?? '',
       date: form.date,
       type: form.type,
       title: form.title,

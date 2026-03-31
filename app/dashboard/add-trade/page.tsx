@@ -35,7 +35,7 @@ function Field({ label, error, children, className }: { label: string; error?: s
 
 export default function AddTradePage() {
   const router = useRouter();
-  const { addTrade } = useApp();
+  const { addTrade, user } = useApp();
 
   const [form, setForm] = useState({
     date: format(new Date(), 'yyyy-MM-dd'),
@@ -111,7 +111,7 @@ export default function AddTradePage() {
     const risk = parseFloat(form.riskAmount) || 0;
     const trade: Trade = {
       id: generateId(),
-      userId: 'user-1',
+      userId: user?.id ?? '',
       date: form.date,
       time: form.time,
       symbol: form.symbol.toUpperCase().trim(),

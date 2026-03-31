@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { TrendingUp, Eye, EyeOff, ArrowLeft, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { createClient } from '@/lib/supabase/client';
 
 const PERKS = [
   'Visual P&L calendar with daily breakdown',
@@ -31,9 +32,20 @@ export default function SignupPage() {
     if (!name || !email || !password) { toast.error('Please fill in all fields'); return; }
     if (password.length < 8) { toast.error('Password must be at least 8 characters'); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 900));
-    toast.success('Account created! Welcome to TradeJournal Pro.');
-    router.push('/dashboard');
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { display_name: name } },
+      });
+      if (error) { toast.error(error.message); return; }
+      toast.success('Account created! Welcome to TradeJournal Pro.');
+      router.push('/dashboard');
+      router.refresh();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

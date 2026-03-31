@@ -18,7 +18,7 @@ import { toast } from 'sonner';
 function generateId() { return `review-${Date.now()}`; }
 
 export default function ReviewsPage() {
-  const { trades, weeklyReviews, saveWeeklyReview } = useApp();
+  const { trades, weeklyReviews, saveWeeklyReview, user } = useApp();
   const [activeReview, setActiveReview] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -47,7 +47,7 @@ export default function ReviewsPage() {
   const handleSave = () => {
     const review: WeeklyReview = {
       id: generateId(),
-      userId: 'user-1',
+      userId: user?.id ?? '',
       weekStart: form.weekStart,
       weekEnd: form.weekEnd,
       totalPnl: weekStats.pnl,

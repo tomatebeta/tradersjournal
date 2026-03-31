@@ -9,20 +9,28 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { TrendingUp, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
+import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('alex@tradejournal.pro');
-  const [password, setPassword] = useState('demo1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) { toast.error('Please fill in all fields'); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 800));
-    toast.success('Welcome back!');
-    router.push('/dashboard');
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) { toast.error(error.message); return; }
+      toast.success('Welcome back!');
+      router.push('/dashboard');
+      router.refresh();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -76,12 +84,6 @@ export default function LoginPage() {
             <Button onClick={handleLogin} disabled={loading} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-5">
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
-          </div>
-
-          <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-            <p className="text-xs text-blue-300/80 text-center">
-              <span className="font-medium">Demo account:</span> alex@tradejournal.pro / demo1234
-            </p>
           </div>
 
           <p className="text-center text-sm text-slate-500 mt-5">

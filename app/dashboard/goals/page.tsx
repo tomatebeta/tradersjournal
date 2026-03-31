@@ -28,7 +28,7 @@ const TYPE_META: Record<string, { label: string; color: string; icon: React.Elem
 };
 
 export default function GoalsPage() {
-  const { tradingRules, saveTradingRules, stats, trades } = useApp();
+  const { tradingRules, saveTradingRules, user, stats, trades } = useApp();
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ type: 'custom' as TradingRule['type'], title: '', description: '', value: '' });
   const set = (k: string, v: unknown) => setForm(p => ({ ...p, [k]: v }));
@@ -57,7 +57,7 @@ export default function GoalsPage() {
     if (!form.title.trim()) { toast.error('Title required'); return; }
     const rule: TradingRule = {
       id: generateId(),
-      userId: 'user-1',
+      userId: user?.id ?? '',
       type: form.type,
       title: form.title,
       description: form.description || undefined,

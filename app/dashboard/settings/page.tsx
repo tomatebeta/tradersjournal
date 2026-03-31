@@ -24,8 +24,8 @@ export default function SettingsPage() {
   const [aiKey, setAiKey] = useState(() => { try { return localStorage.getItem(AI_KEY_STORAGE) || ''; } catch { return ''; } });
   const [showKey, setShowKey] = useState(false);
 
-  const handleSave = () => {
-    saveSettings(form);
+  const handleSave = async () => {
+    await saveSettings(form);
     if (aiKey.trim()) localStorage.setItem(AI_KEY_STORAGE, aiKey.trim());
     else localStorage.removeItem(AI_KEY_STORAGE);
     toast.success('Settings saved successfully');
