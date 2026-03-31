@@ -61,8 +61,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </div>
         {!collapsed && (
           <div>
-            <span className="font-bold text-sm text-sidebar-foreground">TradeJournal</span>
-            <span className="font-bold text-sm text-blue-500"> Pro</span>
+            <span className="font-bold text-sm text-sidebar-foreground">Traders</span><span className="font-bold text-sm text-blue-500">Journal</span>
           </div>
         )}
         <button
@@ -176,8 +175,7 @@ export function MobileSidebar() {
                 <TrendingUp className="w-5 h-5 text-white" />
               </div>
               <div>
-                <span className="font-bold text-sm">TradeJournal</span>
-                <span className="font-bold text-sm text-blue-500"> Pro</span>
+                <span className="font-bold text-sm">Traders</span><span className="font-bold text-sm text-blue-500">Journal</span>
               </div>
               <button onClick={() => setOpen(false)} className="ml-auto p-1 rounded-md hover:bg-sidebar-accent">
                 <X className="w-4 h-4" />

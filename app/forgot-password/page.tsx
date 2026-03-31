@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
           <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center">
             <TrendingUp className="w-6 h-6 text-white" />
           </div>
-          <span className="font-bold text-white">TradeJournal<span className="text-blue-400"> Pro</span></span>
+          <span className="font-bold text-white">Traders<span className="text-blue-400">Journal</span></span>
         </div>
         <Card className="p-8 bg-[#0d1424] border border-white/8 shadow-2xl">
           {sent ? (

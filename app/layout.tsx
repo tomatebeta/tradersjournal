@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TradeJournal Pro — Professional Trading Journal",
+  title: "TradersJournal — Professional Trading Journal",
   description: "A premium trading journal platform for serious traders. Track, analyze, and improve your trading performance.",
   keywords: "trading journal, trade tracker, trading analytics, P&L tracking, trading performance",
 };

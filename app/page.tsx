@@ -23,7 +23,7 @@ const STATS = [
 
 const TESTIMONIALS = [
   { name: 'Marcus T.', role: 'Futures Trader · 4 years', quote: 'The calendar view alone is worth it. I can see exactly which days I overtrade and which sessions are my sweet spot.', stars: 5 },
-  { name: 'Priya K.', role: 'Forex Trader · 6 years', quote: 'TradeJournal Pro helped me realize my Friday trades were consistently losing. I cut those and my win rate jumped 12%.', stars: 5 },
+  { name: 'Priya K.', role: 'Forex Trader · 6 years', quote: 'TradersJournal helped me realize my Friday trades were consistently losing. I cut those and my win rate jumped 12%.', stars: 5 },
   { name: 'James W.', role: 'Options Trader · 2 years', quote: 'The psychology section is genuinely useful. Seeing that I trade worse when "overconfident" was a game-changer.', stars: 5 },
 ];
 
@@ -37,7 +37,7 @@ export default function LandingPage() {
             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-lg">TradeJournal<span className="text-blue-400"> Pro</span></span>
+            <span className="font-bold text-lg">Traders<span className="text-blue-400">Journal</span></span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-slate-400">
             <a href="#features" className="hover:text-white transition-colors">Features</a>
@@ -70,7 +70,7 @@ export default function LandingPage() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400"> your data</span>
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            TradeJournal Pro is the professional trading journal that shows you exactly why you win and why you lose —
+            TradersJournal is the professional trading journal that shows you exactly why you win and why you lose —
             with a visual P&L calendar, deep analytics, and psychology tracking.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -183,7 +183,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Trusted by real traders</h2>
-            <p className="text-slate-400">Join thousands of traders who use TradeJournal Pro to level up their performance.</p>
+            <p className="text-slate-400">Join thousands of traders who use TradersJournal to level up their performance.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map(t => (
@@ -207,7 +207,7 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto text-center">
           <div className="bg-gradient-to-r from-blue-600/20 to-violet-600/20 border border-blue-500/20 rounded-3xl p-12">
             <h2 className="text-4xl font-bold mb-4">Stop guessing. Start knowing.</h2>
-            <p className="text-slate-400 mb-8">Your trading data has the answers. TradeJournal Pro helps you find them.</p>
+            <p className="text-slate-400 mb-8">Your trading data has the answers. TradersJournal helps you find them.</p>
             <Link href="/dashboard" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-10 py-4 rounded-xl transition-all shadow-lg shadow-blue-600/25 text-base">
               Open Your Journal <ArrowRight className="w-5 h-5" />
             </Link>
@@ -222,9 +222,9 @@ export default function LandingPage() {
             <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
               <TrendingUp className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold text-sm">TradeJournal<span className="text-blue-400"> Pro</span></span>
+            <span className="font-bold text-sm">Traders<span className="text-blue-400">Journal</span></span>
           </div>
-          <div className="text-xs text-slate-600">© 2025 TradeJournal Pro. Built for serious traders.</div>
+          <div className="text-xs text-slate-600">© 2025 TradersJournal. Built for serious traders.</div>
           <div className="flex items-center gap-6 text-xs text-slate-500">
             <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
             <Link href="/login" className="hover:text-white transition-colors">Sign In</Link>

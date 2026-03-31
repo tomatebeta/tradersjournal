@@ -45,7 +45,7 @@ export default function LoginPage() {
             <TrendingUp className="w-6 h-6 text-white" />
           </div>
           <div>
-            <div className="font-bold text-white">TradeJournal<span className="text-blue-400"> Pro</span></div>
+            <div className="font-bold text-white">Traders<span className="text-blue-400">Journal</span></div>
             <div className="text-xs text-slate-500">Professional Trading Journal</div>
           </div>
         </div>

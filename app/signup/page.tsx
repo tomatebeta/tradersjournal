@@ -40,7 +40,7 @@ export default function SignupPage() {
         options: { data: { display_name: name } },
       });
       if (error) { toast.error(error.message); return; }
-      toast.success('Account created! Welcome to TradeJournal Pro.');
+      toast.success('Account created! Welcome to TradersJournal.');
       router.push('/dashboard');
       router.refresh();
     } finally {
@@ -57,7 +57,7 @@ export default function SignupPage() {
             <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center">
               <TrendingUp className="w-6 h-6 text-white" />
             </div>
-            <span className="font-bold text-xl text-white">TradeJournal<span className="text-blue-400"> Pro</span></span>
+            <span className="font-bold text-xl text-white">Traders<span className="text-blue-400">Journal</span></span>
           </div>
           <h2 className="text-3xl font-bold text-white mb-3 leading-tight">Everything serious traders need to improve</h2>
           <p className="text-slate-400 mb-8">Your free account includes all core features. No trial limits, no credit card required.</p>
